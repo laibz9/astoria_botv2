@@ -11,6 +11,10 @@ LEAVE_CHANNEL_ID = 1338376280428773397
 class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.clear_messages.start()  # เริ่ม task เมื่อลงทะเบียน Cog
+
+    def cog_unload(self):
+        self.clear_messages.cancel()
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -20,6 +24,22 @@ class Events(commands.Cog):
             status=discord.Status.dnd,
             activity=discord.Streaming(name="Astoria is ready", url="https://www.twitch.tv/your_channel")
         )
+
+# Auto remove message in channel every 3 minutes
+    @tasks.loop(minutes=3)   # <--- Change time here (minutes, seconds, hours)
+    async def clear_messages(self):
+        self.channel_id = 1338384698380128326   # Channel ID
+        if self.channel_id is None:
+            return  # ถ้ายังไม่ได้ตั้งค่าห้อง ไม่ต้องทำอะไร
+        
+        channel = self.bot.get_channel(self.channel_id)
+        if channel:
+            await channel.purge()
+            print(f"📌 ลบข้อความในห้อง {channel.name} แล้ว")
+
+    @clear_messages.before_loop
+    async def before_clear_messages(self):
+        await self.bot.wait_until_ready()
 
 # Join
     @commands.Cog.listener()
