@@ -79,7 +79,7 @@ class SlashPerm(commands.Cog):
     @slash_command(guild_ids=server_guild,
                    default_permissions=True,
                    name="purge",
-                   description="Purges a channel's message."
+                   description="Purges a channel's message..."
                    )
     
     async def purge(self, ctx, number: int):

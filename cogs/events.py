@@ -80,11 +80,8 @@ class Events(commands.Cog):
         if message.content.lower() == 'ping':
             await message.channel.send('Pong!')
         
-        elif any(x in message.content.lower() for x in ['you are gay', 'ur gay']):
-            await message.channel.send('no u :D 555')
-        
-        elif any(x in message.content.lower() for x in ['toon', 'admin']):
-            await message.channel.send('What')
+        elif any(x in message.content.lower() for x in ['admin']):
+            await message.channel.send('What?')
 
         await self.bot.process_commands(message)
 
