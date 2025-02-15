@@ -5,10 +5,9 @@ from discord.commands import slash_command
 # 🔹 กำหนดค่าตัวแปรช่องและ Role ที่ต้องการให้
 CHANNEL_ID = 1338377084212609186        # 🔹 ใส่ ID ของห้องที่จะส่งข้อความ
 ROLE_ID = 1338377142563508266           # 🔹 ใส่ ID ของ Role ที่ต้องการให้
-ALLOWED_ROLE_ID = 1338756413521924109   # 🔹 ใส่ ID ของ User ที่ต้องการให้
 RULES_CHANNEL_ID = 1338224430219919380  # 🔹 ใส่ ID ห้อง Rule ที่ต้องการให้
 
-class verify(commands.Cog):
+class Verify(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -27,9 +26,11 @@ class verify(commands.Cog):
         channel = guild.get_channel(CHANNEL_ID)
         role = guild.get_role(ROLE_ID)
         rules_channel = guild.get_channel(RULES_CHANNEL_ID)
-        has_role = discord.utils.get(ctx.author.roles, id=ALLOWED_ROLE_ID)
 
-        if ctx.author.id != guild.owner_id and not has_role:
+        is_admin = ctx.author.guild_permissions.administrator   # ตรวจสอบว่าเป็น Admin หรือไม่
+        is_owner = ctx.author.id == ctx.guild.owner_id   # ตรวจสอบว่าเป็น Owner หรือไม่
+
+        if not is_owner and not is_admin:
             await ctx.respond("❌ คุณไม่มีสิทธิ์ใช้คำสั่งนี้!", ephemeral=True)
             return
         if not channel:
@@ -71,4 +72,4 @@ class verify(commands.Cog):
         await ctx.respond(f"✅ ส่งข้อความยืนยันตัวตนไปยัง {channel.mention} เรียบร้อย!", ephemeral=True)
 
 def setup(bot):
-    bot.add_cog(verify(bot))
+    bot.add_cog(Verify(bot))

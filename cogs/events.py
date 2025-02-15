@@ -8,28 +8,14 @@ WELCOME_CHANNEL_ID = 1338376280428773397
 LEAVE_CHANNEL_ID = 1338376280428773397
 
 
-class events(commands.Cog):
+class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.start_time = datetime.datetime.utcnow()  # บันทึกเวลาที่บอทออนไลน์
-        self.update_presence.start()
 
     @commands.Cog.listener()
     async def on_ready(self):
         print(f"📁 Loaded ({self.__class__.__name__}) Succeed.")
-        await self.update_presence()
 
-# Presence
-    @tasks.loop(seconds=60)
-    async def update_presence(self):
-        uptime = datetime.datetime.utcnow() - self.start_time
-        hours, remainder = divmod(int(uptime.total_seconds()), 3600)
-        minutes, _ = divmod(remainder, 60)
-        await self.bot.change_presence(activity=discord.Game(name=f"ออนไลน์ {hours} ชม. {minutes} นาที"))
-
-    @update_presence.before_loop
-    async def before_update_presence(self):
-        await self.bot.wait_until_ready()
 
 # Join
     @commands.Cog.listener()
@@ -103,4 +89,4 @@ class events(commands.Cog):
         await self.bot.process_commands(message)
 
 def setup(bot):
-    bot.add_cog(events(bot))
+    bot.add_cog(Events(bot))
