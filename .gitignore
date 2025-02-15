@@ -1,5 +1,5 @@
 .venv/
 .vscode
 cogs/__pycache__/
-config/.env
 cogs/_reference.py
+config/.env
