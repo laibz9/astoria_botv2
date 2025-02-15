@@ -13,9 +13,9 @@ class SlashOptions(commands.Cog):
         print(f"📁 Loaded ({self.__class__.__name__}) Succeed.")
 
     @slash_command(guild_ids=server_guild,
-                   description="Check bot latency..."
+                   description="Check bot latency."
                    )
-    async def everyone_command(self, ctx):
+    async def ping(self, ctx):
         latency = round(ctx.bot.latency * 1000)
         await ctx.respond(f"🏓 Pong! Latency: `{latency}ms`")
 

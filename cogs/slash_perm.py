@@ -16,7 +16,7 @@ class SlashPerm(commands.Cog):
 # Owner Command
     @slash_command(guild_ids=server_guild,
                    default_permissions=False,
-                   description="Check bot latency For Only Owner."
+                   description="Check bot latency.  (Owner only)"
                    )
 
     async def owner_command(self, ctx):
@@ -35,7 +35,7 @@ class SlashPerm(commands.Cog):
 
     @slash_command(guild_ids=server_guild,
                    default_permissions=False,
-                   description="Check bot latency For Only Admin."
+                   description="Check bot latency.  (Admin only)"
                    )
 
 # Admin Command
@@ -57,7 +57,7 @@ class SlashPerm(commands.Cog):
 # Check bot latency
     @slash_command(guild_ids=server_guild,
                    default_permissions=False,
-                   description="Check bot latency For Only Role."
+                   description="Check bot latency. (Role only)"
                    )
     
     async def role_command(self, ctx):
@@ -79,7 +79,7 @@ class SlashPerm(commands.Cog):
     @slash_command(guild_ids=server_guild,
                    default_permissions=True,
                    name="purge",
-                   description="Purges a channel's message..."
+                   description="คำสั่งสำหรับลบข้อความในช่องแชทจำนวนที่ระบุ (Admin only)"
                    )
     
     async def purge(self, ctx, number: int):
